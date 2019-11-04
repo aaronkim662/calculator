@@ -6,70 +6,83 @@ class App extends React.Component {
   state = {
     actual : 0,
     display : '',
-    number: 0,
+    number: '',
     show : false,
     sign : '',
     test : [],
     total : '',
+    check : false
   }
 
   accumulate = (char) => {
-    if( this.state.sign === ''){
-
-    }
-
-    this.setState(prevState => ({
-      test : [...prevState.test, char]
-    }))
-
-    if (char === '+' || char === '-' || char === '*' || char === '/'){
+    if (this.state.number === ''){
       this.setState({
-        actual: 0
+        number : char
       })
     }else{
       this.setState(prevState => ({
-        actual : prevState.actual +parseInt(char)
+        number : prevState.number + char
       }))
     }
+
     this.setState(prevState => ({
       display: prevState.display + char
     }))
-    // if(char === '+'){
-    // this.setState(prevState => ({
-    //   number : prevState.number + char
-    // }))
-    // }else{
-    //   this.setState(prevState => ({
-    //     number : prevState.number + parseInt(char)
-    //   }))
-    // }
-  
   }
 
-  newNumber = () => {
+  clearAll = () => {
     this.setState({
-      actual: 0
+      display: '',
+      number: '',
+      show: false,
+      sign: '',
+      test: [],
+      total: '',
+      check: true
     })
   }
+  // set sign to state
+  // then add number to test
+  setSign = (char) => {
+    this.setState({
+      sign : char,
+    });
+
+    this.setState(prevState => ({
+      test : [...prevState.test, this.state.number]
+    }));
+
+    this.setState({
+      number: ''
+    })
+
+    this.setState(prevState => ({
+      test : [...prevState.test, char]
+    }));
+
+    this.setState(prevState => ({
+      display: prevState.display + char
+    }))
+  };
 
   totaling = () => {
-    this.setState({
-      show : true
-    })
-    const arr = this.state.display.split('+')
-    const sum = parseInt(arr[0]) + parseInt(arr[1])
-    this.setState({
-      total: sum
-    })
+
+  }
+  setTest = () => {
+
   }
 
   testTotal = () => {
-    this.setState({
-      show : true
-    })
-    const arr = this.state.test;
-    let currentNum = 0
+    if(this.state.number !== ''){
+    this.setState(prevState => ({
+      test : [...prevState.test, this.state.number],
+      check : true
+    }))
+  }
+  if(this.state.check === true){
+    let arr = this.state.test;
     let sum = parseInt(arr[0]);
+    console.log('hello', arr)
     for(let i = 1; i < arr.length; i+=2){
       if(arr[i] === '+'){
         sum += parseInt(arr[i+1]);
@@ -79,13 +92,23 @@ class App extends React.Component {
         sum *= parseInt(arr[i+1]);
       }else if(arr[i] === '/'){
         sum = parseFloat(sum / parseInt(arr[i+1]));
-      }else{
-        currentNum += arr[i]
       }
     }
     this.setState({
+      number : ''
+    })
+    if(!isNaN(sum)){
+      console.log('true')
+    this.setState({
+      show : true,
       total : sum
     })
+  }else{
+    console.log('false')
+    }
+  }
+    
+
   }
 
   render (){
@@ -108,16 +131,19 @@ class App extends React.Component {
         <h2 onClick={() => this.accumulate('9')} className='numbers'>9</h2>
       </div>
       <div className='calcRow'>
-        <h2 onClick={() => this.accumulate('+')} className='numbers'>+</h2>
-        <h2 onClick={() => this.accumulate('-')} className='numbers'>-</h2>
-        <h2 onClick={() => this.accumulate('*')} className='numbers'>*</h2>
-        <h2 onClick={() => this.accumulate('/')} className='numbers'>/</h2>
+        <h2 onClick={() => this.setSign('+')} className='numbers'>+</h2>
+        <h2 onClick={() => this.setSign('-')} className='numbers'>-</h2>
+        <h2 onClick={() => this.setSign('*')} className='numbers'>*</h2>
+        <h2 onClick={() => this.setSign('/')} className='numbers'>/</h2>
       </div>
       <h4>Display: {this.state.display}</h4>
       <h4>Number: {this.state.number}</h4>
-      <h4>{7+ 10}</h4>
+      <h4>...</h4>
+      <div className='calcRow'>
       <h4 onClick={() => this.testTotal()}>=</h4>
       <h4>Total : {this.state.show ? this.state.total : null}</h4>
+      <h4 onClick={() => this.clearAll()}>Clear</h4>
+      </div>
     </div>
     )
   }
