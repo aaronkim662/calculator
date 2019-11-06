@@ -14,6 +14,31 @@ class App extends React.Component {
     check : false
   }
 
+  arrayIt = () => {
+    let str = this.state.display
+    let arr = [];
+    let go = true
+    while(go){
+    for(let i = 0; i < str.length; i+= 1){
+      if(str[i] === '+' || str[i] === '-' || str[i] === '*' || str[i] === '/'){
+        let newStr = str.substring(0,i)
+        arr.push(newStr)
+        str = str.replace(str.substring(0,i), '')
+        arr.push(str.substring(0,1))
+        str = str.replace(str.substring(0,1),'')
+        i = 0
+        }
+      }
+      if(!str.includes('+') && !str.includes('-') && !str.includes('*')&& !str.includes('/')){
+        go = false;
+        arr.push(str)
+      }
+    }
+      this.setState({
+        test : arr
+      })
+  }
+
   accumulate = (char) => {
     if (this.state.number === ''){
       this.setState({
@@ -28,6 +53,8 @@ class App extends React.Component {
     this.setState(prevState => ({
       display: prevState.display + char
     }))
+    this.arrayIt()
+
   }
 
   clearAll = () => {
@@ -63,31 +90,11 @@ class App extends React.Component {
     this.setState(prevState => ({
       display: prevState.display + char
     }))
+
+    this.arrayIt()
   };
 
-  // totaling = () => {
-  //   let arr = this.state.test
-  //   let sum = parseInt(arr[0]);
-  //   for(let i = 1; i < arr.length; i+=2){
-  //     if(arr[i] === '+'){
-  //       sum += parseInt(arr[i+1]);
-  //     }else if(arr[i] === '-'){
-  //       sum -= parseInt(arr[i+1]);
-  //     }else if(arr[i] === '*'){
-  //       sum *= parseInt(arr[i+1]);
-  //     }else if(arr[i] === '/'){
-  //       sum = parseFloat(sum / parseInt(arr[i+1]));
-  //     }
-  //   }
-  //   console.log('sum', sum, arr)
-  //   if(!isNaN(sum)){
-  //   this.setState({
-  //     show : true,
-  //     total: sum
-  //   })
-  // }
-  //   return sum
-  // }
+
   totaling = () => {
     let arr = this.state.test
     let operations = ['*', '/', '+', '-'];
@@ -96,12 +103,12 @@ class App extends React.Component {
       for(let i = 0; i < arr.length; i += 1){
         if(arr[i] === operations[0]){
           const multiply = parseFloat(parseInt(arr[i-1])) * parseFloat(parseInt(arr[i+1]));
-          const split = arr.splice(i-1,3);
+          arr.splice(i-1,3);
           arr.splice(i-1,0,multiply);
           i = 0;
         }else if(arr[i] === operations[1]){
           const divide = parseFloat(parseInt(arr[i-1])) / parseFloat(parseInt(arr[i+1]));
-          const split = arr.splice(i-1,3);
+          arr.splice(i-1,3);
           arr.splice(i-1,0,divide);
           i = 0;
         }
@@ -136,26 +143,24 @@ class App extends React.Component {
     this.setState({
       total : arr[0],
       show : true,
-
     })
   }
 
 
   testTotal = () => {
-
+    // this.arrayIt()
     if(this.state.number !== ''){
     this.setState(prevState => ({
-      test : [...prevState.test, this.state.number],
       number : '',
       check : true
       }))
     }
-    let arr = this.state.test
-    if(arr[arr.length-1] === '+' || arr[arr.length-1] === '-' || arr[arr.length-1] === '*' || arr[arr.length-1] === '/'){
-      console.log('click')
-    }else{
+    // let arr = this.state.test
+    // if(arr[arr.length-1] === '+' || arr[arr.length-1] === '-' || arr[arr.length-1] === '*' || arr[arr.length-1] === '/'){
+    //   console.log('click')
+    // }else{
     this.totaling()
-    }
+    // }
   }
 
   
