@@ -4,6 +4,7 @@ import './App.css';
 
 class App extends React.Component {
   state = {
+    basic: true,
     check : false,
     display : '',
     number: '',
@@ -97,6 +98,12 @@ class App extends React.Component {
     this.arrayIt()
   };
 
+  setScientific = () => {
+    this.setState({
+      basic: false,
+      scientific : true
+    })
+  }
   handleChange = (e) => {
     e = e.target.value
     console.log(e)
@@ -119,14 +126,14 @@ class App extends React.Component {
     while(go){
       for(let i = 0; i < arr.length; i += 1){
         if(arr[i] === operations[0]){
-          const multiply = parseFloat(parseInt(arr[i-1])) * parseFloat(parseInt(arr[i+1]));
+          const multiply = parseFloat(arr[i-1]) * parseFloat(arr[i+1]);
           arr.splice(i-1,3);
-          arr.splice(i-1,0,multiply);
+          arr.splice(i-1,0,multiply.toFixed(5));
           i = 0;
         }else if(arr[i] === operations[1]){
-          const divide = parseFloat(parseFloat(parseInt(arr[i-1])) / parseFloat(parseInt(arr[i+1])));
+          const divide = (parseFloat(arr[i-1]) / parseFloat(arr[i+1]));
           arr.splice(i-1,3);
-          arr.splice(i-1,0,divide);
+          arr.splice(i-1,0,divide.toFixed(5));
           i = 0;
         }
       }
@@ -140,14 +147,14 @@ class App extends React.Component {
       while(run){
       for(let i = 0; i < arr.length; i += 1){
         if(arr[i] === operations[0]){
-          const add = parseFloat(parseInt(arr[i-1])) + parseFloat(parseInt(arr[i+1]));
+          const add = parseFloat(arr[i-1]) + parseFloat(arr[i+1]);
           const split = arr.splice(i-1,3);
-          arr.splice(i-1,0,add);
+          arr.splice(i-1,0,add.toFixed(5));
           i = 0;
         }else if(arr[i] === operations[1]){
-          const subtract = parseFloat(parseInt(arr[i-1])) - parseFloat(parseInt(arr[i+1]));
+          const subtract = parseFloat(arr[i-1]) - parseFloat(arr[i+1]);
           const split = arr.splice(i-1,3);
-          arr.splice(i-1,0, subtract);
+          arr.splice(i-1,0, subtract.toFixed(5));
           i = 0;
         }
       }
@@ -178,6 +185,9 @@ class App extends React.Component {
     return (
       <div className='App'>
         <h1>Calculator</h1>
+        <button onClick={this.setScientific}>Scientific</button>
+        {this.state.basic ? 
+        <>
         <div className='calcRow'>
           <h2 onClick={() => this.accumulate('1')} className='numbers'>1</h2>
           <h2 onClick={() => this.accumulate('2')} className='numbers'>2</h2>
@@ -192,6 +202,9 @@ class App extends React.Component {
         <h2 onClick={() => this.accumulate('7')} className='numbers'>7</h2>
         <h2 onClick={() => this.accumulate('8')} className='numbers'>8</h2>
         <h2 onClick={() => this.accumulate('9')} className='numbers'>9</h2>
+        <h2 onClick={() => this.accumulate('0')} className='numbers'>0</h2>
+        <h2 onClick={() => this.accumulate('.')} className='numbers'>.</h2>
+
       </div>
       <div className='calcRow'>
         <h2 onClick={() => this.setSign('+')} className='numbers'>+</h2>
@@ -207,11 +220,41 @@ class App extends React.Component {
       <h4>Total : {this.state.show ? this.state.total : null}</h4>
       <h4 onClick={() => this.clearAll()}>Clear</h4>
       </div>
+      </>
+       : 
+       <>
+       <div className='calcRow'>
+          <h2 className='numbers'>1</h2>
+          <h2 className='numbers'>2</h2>
+          <h2 className='numbers'>3</h2>
+          <h2 className='numbers'>4</h2>
+       </div>
+       <div className='calcRow'>
+          <h2 className='numbers'>5</h2>
+          <h2 className='numbers'>6</h2>
+          <h2 className='numbers'>7</h2>
+          <h2 className='numbers'>8</h2>
+          <h2 className='numbers'>9</h2>
+       </div>
+       <div className='calcRow'>
+          <h2 className='numbers'>-</h2>
+          <h2 className='numbers'>*</h2>
+          <h2 className='numbers'>/</h2>
+          <h2 className='numbers'>+</h2>
+       </div>
+       <h4>Display: {this.state.display}</h4>
+      <h4>...</h4>
+      <input className='calcInput' onChange={(e) => this.handleChange(e)} value={this.state.display}  />
+      <div className='calcRow'>
+      <h4 onClick={() => this.testTotal()}>=</h4>
+      <h4>Total : {this.state.show ? this.state.total : null}</h4>
+      <h4 onClick={() => this.clearAll()}>Clear</h4>
+      </div>
+       </> }
     </div>
+        
     )
   }
 }
-
-
 
 export default App;
