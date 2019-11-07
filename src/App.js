@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends React.Component {
@@ -20,49 +19,48 @@ class App extends React.Component {
   arrayIt = () => {
     let str = this.string;
     let arr = [];
-    let go = true
+    let go = true;
     while(go){
     for(let i = 0; i < str.length; i+= 1){
       if(str[i] === '+' || str[i] === '-' || str[i] === '*' || str[i] === '/'){
-        let newStr = str.substring(0,i)
-        arr.push(newStr)
-        str = str.replace(str.substring(0,i), '')
-        arr.push(str.substring(0,1))
-        str = str.replace(str.substring(0,1),'')
-        i = 0
+        let newStr = str.substring(0,i);
+        arr.push(newStr);
+        str = str.replace(str.substring(0,i), '');
+        arr.push(str.substring(0,1));
+        str = str.replace(str.substring(0,1),'');
+        i = 0;
         }
       }
 
       if(!str.includes('+') && !str.includes('-') && !str.includes('*')&& !str.includes('/')){
         go = false;
-        arr.push(str)
+        arr.push(str);
       }
     }
       this.setState({
-        test : arr
+        test : arr,
       })
   }
 
   accumulate = (char) => {
     if(this.state.show === true){
-      this.clearAll()
+      this.clearAll();
     }
-    this.string += char
+    this.string += char;
 
     this.setState(prevState => ({
-      display: prevState.display + char
+      display: prevState.display + char,
     }))
     if (this.state.number === ''){
       this.setState({
-        number : char
+        number : char,
       })
     }else{
       this.setState(prevState => ({
-        number : prevState.number + char
+        number : prevState.number + char,
       }))
     }
-    this.arrayIt()
-
+    this.arrayIt();
   }
 
   clearAll = () => {
@@ -88,39 +86,37 @@ class App extends React.Component {
     });
 
     this.setState(prevState => ({
-      display: prevState.display + char
+      display: prevState.display + char,
     }))
 
     this.setState({
-      number : ''
+      number : '',
     })
 
-    this.arrayIt()
+    this.arrayIt();
   };
 
   setScientific = () => {
     this.setState({
       basic: false,
-      scientific : true
+      scientific : true,
     })
   }
   handleChange = (e) => {
-    e = e.target.value
-    console.log(e)
+    e = e.target.value;
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
     if(!alphabet.includes(e.toLowerCase())){
       this.setState(prevState => ({
-        display: e
+        display: e,
       }))
     }
-    this.string = e
+    this.string = e;
     this.arrayIt();
-    console.log('change', this.string)
   }
 
   totaling = () => {
-    let arr1 = this.state.test
-    let arr = arr1
+    let arr1 = this.state.test;
+    let arr = arr1;
     let operations = ['*', '/', '+', '-'];
     let go = true;
     while(go){
@@ -133,7 +129,7 @@ class App extends React.Component {
         }else if(arr[i] === operations[1]){
           const divide = (parseFloat(arr[i-1]) / parseFloat(arr[i+1]));
           arr.splice(i-1,3);
-          arr.splice(i-1,0,divide.toFixed(5));
+          arr.splice(i-1,0,divide.toFixed(2));
           i = 0;
         }
       }
@@ -148,12 +144,12 @@ class App extends React.Component {
       for(let i = 0; i < arr.length; i += 1){
         if(arr[i] === operations[0]){
           const add = parseFloat(arr[i-1]) + parseFloat(arr[i+1]);
-          const split = arr.splice(i-1,3);
+          arr.splice(i-1,3);
           arr.splice(i-1,0,add.toFixed(5));
           i = 0;
         }else if(arr[i] === operations[1]){
           const subtract = parseFloat(arr[i-1]) - parseFloat(arr[i+1]);
-          const split = arr.splice(i-1,3);
+          arr.splice(i-1,3);
           arr.splice(i-1,0, subtract.toFixed(5));
           i = 0;
         }
@@ -174,14 +170,13 @@ class App extends React.Component {
     if(this.state.number !== ''){
     this.setState(prevState => ({
       number : '',
-      check : true
+      check : true,
       }))
     }
     this.totaling()
   }
 
   render (){
-    console.log('string', this.string)
     return (
       <div className='App'>
         <h1>Calculator</h1>
