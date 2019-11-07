@@ -14,8 +14,10 @@ class App extends React.Component {
     check : false
   }
 
+  string = '';
+
   arrayIt = () => {
-    let str = this.state.display
+    let str = this.string;
     let arr = [];
     let go = true
     while(go){
@@ -40,6 +42,10 @@ class App extends React.Component {
   }
 
   accumulate = (char) => {
+    this.string += char
+    this.setState(prevState => ({
+      display: prevState.display + char
+    }))
     if (this.state.number === ''){
       this.setState({
         number : char
@@ -50,9 +56,7 @@ class App extends React.Component {
       }))
     }
 
-    this.setState(prevState => ({
-      display: prevState.display + char
-    }))
+
     this.arrayIt()
 
   }
@@ -71,32 +75,26 @@ class App extends React.Component {
   // set sign to state
   // then add number to test
   setSign = (char) => {
+    this.string += char;
     this.setState({
       sign : char,
     });
 
     this.setState(prevState => ({
-      test : [...prevState.test, this.state.number]
-    }));
-
-    this.setState({
-      number: ''
-    })
-
-    this.setState(prevState => ({
-      test : [...prevState.test, char]
-    }));
-
-    this.setState(prevState => ({
       display: prevState.display + char
     }))
+
+    this.setState({
+      number : ''
+    })
 
     this.arrayIt()
   };
 
 
   totaling = () => {
-    let arr = this.state.test
+    let arr1 = this.state.test
+    let arr = arr1
     let operations = ['*', '/', '+', '-'];
     let go = true;
     while(go){
@@ -163,9 +161,8 @@ class App extends React.Component {
     // }
   }
 
-  
-
   render (){
+    console.log('string',this.string)
     return (
       <div className='App'>
         <h1>Calculator</h1>
