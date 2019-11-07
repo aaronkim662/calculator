@@ -4,14 +4,14 @@ import './App.css';
 
 class App extends React.Component {
   state = {
-    actual : 0,
+    check : false,
     display : '',
     number: '',
+    scientific: false,
     show : false,
     sign : '',
     test : [],
     total : '',
-    check : false
   }
 
   string = '';
@@ -31,6 +31,7 @@ class App extends React.Component {
         i = 0
         }
       }
+
       if(!str.includes('+') && !str.includes('-') && !str.includes('*')&& !str.includes('/')){
         go = false;
         arr.push(str)
@@ -42,7 +43,11 @@ class App extends React.Component {
   }
 
   accumulate = (char) => {
+    if(this.state.show === true){
+      this.clearAll()
+    }
     this.string += char
+
     this.setState(prevState => ({
       display: prevState.display + char
     }))
@@ -55,27 +60,28 @@ class App extends React.Component {
         number : prevState.number + char
       }))
     }
-
-
     this.arrayIt()
 
   }
 
   clearAll = () => {
     this.setState({
+      check: false,
       display: '',
       number: '',
       show: false,
       sign: '',
       test: [],
       total: '',
-      check: false
     })
+
+    this.string = '';
   }
   // set sign to state
   // then add number to test
   setSign = (char) => {
     this.string += char;
+
     this.setState({
       sign : char,
     });
@@ -91,6 +97,19 @@ class App extends React.Component {
     this.arrayIt()
   };
 
+  handleChange = (e) => {
+    e = e.target.value
+    console.log(e)
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    if(!alphabet.includes(e.toLowerCase())){
+      this.setState(prevState => ({
+        display: e
+      }))
+    }
+    this.string = e
+    this.arrayIt();
+    console.log('change', this.string)
+  }
 
   totaling = () => {
     let arr1 = this.state.test
@@ -105,7 +124,7 @@ class App extends React.Component {
           arr.splice(i-1,0,multiply);
           i = 0;
         }else if(arr[i] === operations[1]){
-          const divide = parseFloat(parseInt(arr[i-1])) / parseFloat(parseInt(arr[i+1]));
+          const divide = parseFloat(parseFloat(parseInt(arr[i-1])) / parseFloat(parseInt(arr[i+1])));
           arr.splice(i-1,3);
           arr.splice(i-1,0,divide);
           i = 0;
@@ -144,25 +163,18 @@ class App extends React.Component {
     })
   }
 
-
   testTotal = () => {
-    // this.arrayIt()
     if(this.state.number !== ''){
     this.setState(prevState => ({
       number : '',
       check : true
       }))
     }
-    // let arr = this.state.test
-    // if(arr[arr.length-1] === '+' || arr[arr.length-1] === '-' || arr[arr.length-1] === '*' || arr[arr.length-1] === '/'){
-    //   console.log('click')
-    // }else{
     this.totaling()
-    // }
   }
 
   render (){
-    console.log('string',this.string)
+    console.log('string', this.string)
     return (
       <div className='App'>
         <h1>Calculator</h1>
@@ -189,11 +201,11 @@ class App extends React.Component {
       </div>
       <h4>Display: {this.state.display}</h4>
       <h4>...</h4>
+      <input className='calcInput' onChange={(e) => this.handleChange(e)} value={this.state.display}  />
       <div className='calcRow'>
       <h4 onClick={() => this.testTotal()}>=</h4>
       <h4>Total : {this.state.show ? this.state.total : null}</h4>
       <h4 onClick={() => this.clearAll()}>Clear</h4>
-
       </div>
     </div>
     )
