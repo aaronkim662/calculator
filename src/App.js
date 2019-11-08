@@ -6,6 +6,7 @@ class App extends React.Component {
     basic: true,
     check : false,
     display : '',
+    mode : 'Rad',
     number: '',
     scientific: false,
     show : false,
@@ -24,15 +25,19 @@ class App extends React.Component {
     for(let i = 0; i < str.length; i+= 1){
       if(str[i] === '+' || str[i] === '-' || str[i] === '*' || str[i] === '/'){
         let newStr = str.substring(0,i);
-        arr.push(newStr);
+        if(newStr !== ''){
+          arr.push(newStr)
+        }
         str = str.replace(str.substring(0,i), '');
-        arr.push(str.substring(0,1));
+        if(str.substring(0,1) !== ''){
+          arr.push(str.substring(0,1))
+        }
         str = str.replace(str.substring(0,1),'');
         i = 0;
         }
       }
 
-      if(!str.includes('+') && !str.includes('-') && !str.includes('*')&& !str.includes('/')){
+      if(!str.includes('+') && !str.includes('-') && !str.includes('*')&& !str.includes('/') && !str.includes('(') && !str.includes(')')){        
         go = false;
         arr.push(str);
       }
@@ -75,6 +80,26 @@ class App extends React.Component {
     })
 
     this.string = '';
+  }
+
+  setBasic = () => {
+    this.setState({
+      basic: true,
+      scientific: false
+    })
+  }
+
+  setMode = (e) => {
+    e.preventDefault();
+    if(this.state.mode === 'Rad'){
+      this.setState({
+        mode : 'Deg'
+      })
+    }else if(this.state.mode === 'Deg'){
+      this.setState({
+        mode : 'Rad'
+      })
+    }
   }
   // set sign to state
   // then add number to test
@@ -180,6 +205,7 @@ class App extends React.Component {
     return (
       <div className='App'>
         <h1>Calculator</h1>
+        <button onClick={this.setBasic}>Basic</button>
         <button onClick={this.setScientific}>Scientific</button>
         {this.state.basic ? 
         <>
@@ -197,9 +223,10 @@ class App extends React.Component {
         <h2 onClick={() => this.accumulate('7')} className='numbers'>7</h2>
         <h2 onClick={() => this.accumulate('8')} className='numbers'>8</h2>
         <h2 onClick={() => this.accumulate('9')} className='numbers'>9</h2>
+      </div>
+      <div className='calcRow'>
         <h2 onClick={() => this.accumulate('0')} className='numbers'>0</h2>
         <h2 onClick={() => this.accumulate('.')} className='numbers'>.</h2>
-
       </div>
       <div className='calcRow'>
         <h2 onClick={() => this.setSign('+')} className='numbers'>+</h2>
@@ -218,24 +245,37 @@ class App extends React.Component {
       </>
        : 
        <>
+       <div>Scientific</div>
+       <button onClick={(e) => this.setMode(e)}>{this.state.mode}</button>
        <div className='calcRow'>
-          <h2 className='numbers'>1</h2>
-          <h2 className='numbers'>2</h2>
-          <h2 className='numbers'>3</h2>
-          <h2 className='numbers'>4</h2>
+        <h2 className='numbers'>0</h2>
+        <h2 className='numbers'>1</h2>
+        <h2 className='numbers'>2</h2>
+        <h2 className='numbers'>3</h2>
+        <h2 className='numbers'>4</h2>
        </div>
        <div className='calcRow'>
-          <h2 className='numbers'>5</h2>
-          <h2 className='numbers'>6</h2>
-          <h2 className='numbers'>7</h2>
-          <h2 className='numbers'>8</h2>
-          <h2 className='numbers'>9</h2>
+        <h2 className='numbers'>5</h2>
+        <h2 className='numbers'>6</h2>
+        <h2 className='numbers'>7</h2>
+        <h2 className='numbers'>8</h2>
+        <h2 className='numbers'>9</h2>
        </div>
        <div className='calcRow'>
-          <h2 className='numbers'>-</h2>
-          <h2 className='numbers'>*</h2>
-          <h2 className='numbers'>/</h2>
-          <h2 className='numbers'>+</h2>
+        <h2 className='numbers'>-</h2>
+        <h2 className='numbers'>*</h2>
+        <h2 className='numbers'>/</h2>
+        <h2 className='numbers'>+</h2>
+       </div>
+       <div className='calcRow'>
+        <h2 className='numbers'>sin</h2>
+        <h2 className='numbers'>cos</h2>
+        <h2 className='numbers'>tan</h2>
+        <h2 className='numbers'>^</h2>
+        <h2 className='numbers'>log</h2>
+        <h2 className='numbers'>ln</h2>
+        <h2 className='numbers'>e</h2>
+        <h2 className='numbers'>π</h2>
        </div>
        <h4>Display: {this.state.display}</h4>
       <h4>...</h4>
