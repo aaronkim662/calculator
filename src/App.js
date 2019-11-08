@@ -8,6 +8,7 @@ class App extends React.Component {
     display : '',
     mode : 'Rad',
     number: '',
+    parens : true,
     scientific: false,
     show : false,
     sign : '',
@@ -16,6 +17,20 @@ class App extends React.Component {
   }
 
   string = '';
+
+  addParens = () => {
+    if(this.state.parens === true){
+      this.setState(prevState => ({
+        parens : false,
+        display : prevState.display + '('
+      }))
+    }else{
+      this.setState(prevState => ({
+        parens : true,
+        display : prevState.display + ')'
+      }))
+    }
+  }
 
   arrayIt = () => {
     let str = this.string;
@@ -227,6 +242,7 @@ class App extends React.Component {
       <div className='calcRow'>
         <h2 onClick={() => this.accumulate('0')} className='numbers'>0</h2>
         <h2 onClick={() => this.accumulate('.')} className='numbers'>.</h2>
+        <h2 onClick={() => this.addParens()} className='numbers'>()</h2>
       </div>
       <div className='calcRow'>
         <h2 onClick={() => this.setSign('+')} className='numbers'>+</h2>
