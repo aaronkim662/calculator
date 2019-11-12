@@ -97,6 +97,32 @@ class App extends React.Component {
     this.string = '';
   }
 
+  parens = () => {
+    let arr = this.state.test
+    let count = 0
+    let start = 0;
+    let stop = 0
+    for(let i = 0; i < arr.length;i += 1){
+      if(count !== 2 ){
+        if(arr[i] === '('){
+          start = i
+          count += 1
+        }else if(arr[i] === ')'){
+          stop = i
+          count += 1
+        }
+      }
+    }
+
+    if(count === 2){
+      let newArr = arr.splice(start,stop - start + 1)
+      let newArr1 = newArr.splice(1,newArr.length - 2)
+      const  newNum = this.totaling(newArr1)[0]
+      arr.splice(start,0,newNum)
+    }
+    return arr
+  }
+
   setBasic = () => {
     this.setState({
       basic: true,
@@ -213,8 +239,16 @@ class App extends React.Component {
       check : true,
       }))
     }
-    this.totaling()
-  }
+    let go = true
+    while(go){
+      if(this.state.test.includes('(') && this.state.test.includes(')')){
+        this.parens()
+      }else{
+        go = false
+      }
+    }
+  return this.totaling()
+}
 
   render (){
     return (
