@@ -17,7 +17,7 @@ class App extends React.Component {
   }
 
   string = '';
-
+  // test code
   addParens = () => {
     if(this.state.parens === true){
       this.setState(prevState => ({
