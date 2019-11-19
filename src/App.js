@@ -18,7 +18,122 @@ class App extends React.Component {
 
   string = '';
 
+<<<<<<< HEAD
   // calculate
+=======
+  accountParens = () => {
+    let arr = this.state.test
+    let operations = ['*', '/', '+', '-','(',')'];
+    let go = true;
+    while(go){
+      for(let i = 0; i < arr.length - 1; i += 1){
+        if(arr[i] === ')' && arr[i+1] === '('){
+          arr.splice(i+1,0,'*')
+          i = 0
+        }else if(!operations.includes(arr[i]) && arr[i+1] === '('){
+          arr.splice(i+1,0,'*')
+          i = 0
+        }else if(arr[i] === ')' && !operations.includes(arr[i+1])){
+          arr.splice(i+1,0,'*')
+          i = 0
+        }else{
+          go = false
+        }
+      }
+    }
+    return arr
+  }
+
+  accumulate = (char) => {
+    if(this.state.show === true){
+      this.clearAll();
+    }
+    this.string += char;
+
+    this.setState(prevState => ({
+      display: prevState.display + char,
+    }))
+    if (this.state.number === ''){
+      this.setState({
+        number : char,
+      })
+    }else{
+      this.setState(prevState => ({
+        number : prevState.number + char,
+      }))
+    }
+    this.arrayIt();
+  }
+
+
+  addParens = () => {
+    if(this.state.parens === true){
+      this.setState(prevState => ({
+        parens : false,
+        display : prevState.display + '('
+      }))
+      this.string += '(';
+    }else{
+      this.setState(prevState => ({
+        parens : true,
+        display : prevState.display + ')'
+      }))
+      this.string += ')';
+    }
+    this.arrayIt();
+  }
+
+  arrayIt = () => {
+    console.log('string',this.string)
+    let str = this.string;
+    let arr = [];
+    let go = true;
+    while(go){
+    for(let i = 0; i < str.length; i+= 1){
+      if(str[i] === '+' || str[i] === '-' || str[i] === '*' || str[i] === '/' || (str[i] === '(') ||str[i] === ')'){
+        let newStr = str.substring(0,i);
+        if(newStr !== ''){
+          arr.push(newStr)
+        }
+        str = str.replace(str.substring(0,i), '');
+
+        if(str.substring(0,1) !== ''){
+          arr.push(str.substring(0,1))
+        }
+
+        str = str.replace(str.substring(0,1),'');
+        i = -1;
+        }
+      }
+
+      if(!str.includes('+') && !str.includes('-') && !str.includes('*')&& !str.includes('/') && !str.includes('(') && !str.includes(')')){        
+        go = false;
+        arr.push(str);
+      }
+    }
+    if(arr[arr.length - 1] === ''){
+      arr.pop()
+    }
+      this.setState({
+        test : arr,
+      })
+  }
+
+  clearAll = () => {
+    this.setState({
+      check: false,
+      display: '',
+      number: '',
+      show: false,
+      sign: '',
+      test: [],
+      total: '',
+    })
+
+    this.string = '';
+  }
+
+>>>>>>> 424ce5f0de8a8515d1a14ae7e84bb4f9ea676c26
   parens = () => {
     let arr = this.state.test
     let count = 0
