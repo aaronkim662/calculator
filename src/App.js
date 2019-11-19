@@ -18,7 +18,6 @@ class App extends React.Component {
 
   string = '';
 
-
   accountParens = () => {
     let arr = this.state.test
     let operations = ['*', '/', '+', '-','(',')'];
@@ -62,6 +61,7 @@ class App extends React.Component {
     }
     this.arrayIt();
   }
+
 
   addParens = () => {
     if(this.state.parens === true){
