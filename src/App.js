@@ -13,14 +13,13 @@ class App extends React.Component {
     show : false,
     sign : '',
     test : [],
-    total : '',
+    total : 0,
   }
 
   string = '';
+  parensDisplay = '';
 
-<<<<<<< HEAD
-  // calculate
-=======
+  // separate operators
   accountParens = () => {
     let arr = this.state.test
     let operations = ['*', '/', '+', '-','(',')'];
@@ -41,9 +40,11 @@ class App extends React.Component {
         }
       }
     }
+    console.log('accountparens', arr)
     return arr
   }
 
+  // keep adding to display and inputs
   accumulate = (char) => {
     if(this.state.show === true){
       this.clearAll();
@@ -65,7 +66,7 @@ class App extends React.Component {
     this.arrayIt();
   }
 
-
+  // add parens to display
   addParens = () => {
     if(this.state.parens === true){
       this.setState(prevState => ({
@@ -84,7 +85,6 @@ class App extends React.Component {
   }
 
   arrayIt = () => {
-    console.log('string',this.string)
     let str = this.string;
     let arr = [];
     let go = true;
@@ -132,8 +132,7 @@ class App extends React.Component {
 
     this.string = '';
   }
-
->>>>>>> 424ce5f0de8a8515d1a14ae7e84bb4f9ea676c26
+  // do operations within parens
   parens = () => {
     let arr = this.state.test
     let count = 0
@@ -154,22 +153,15 @@ class App extends React.Component {
     if(count === 2){
       let newArr = arr.splice(start,stop - start + 1)
       let newArr1 = newArr.splice(1,newArr.length - 2)
-      console.log('newArr1', newArr1)
-      const  newNum = this.totaling(newArr1)
-      console.log('newNum', newNum)
-
+      this.parensDisplay = newArr1
+      const newNum = this.totaling()
       arr.splice(start,0,newNum)
     }
     return arr
   }
 
-  totaling = (input) => {
-    let arr1 = []
-    if(input === null){
-      arr1 = this.state.test;
-    }else{
-      arr1 = input
-    }
+  totaling = () => {
+    let arr1 = this.parensDisplay === '' ? this.state.display : this.parensDisplay
     console.log('arr1', arr1)
     let arr = arr1;
     let operations = ['*', '/', '+', '-'];
@@ -215,14 +207,15 @@ class App extends React.Component {
         operations.shift();
       }
     }
+    this.parensDisplay = '';
     this.setState({
       total : arr[0],
       show : true,
-    })
+    });
   }
 
   testTotal = () => {
-    let newArr = this.accountParens(this.state.test)
+    let newArr = this.accountParens()
     console.log('parens', newArr)
     if(this.state.number !== ''){
     this.setState(prevState => ({
