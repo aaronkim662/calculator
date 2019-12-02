@@ -312,7 +312,7 @@ clearAll = () => {
         <h1>Calculator</h1>
         <button onClick={this.setBasic}>Basic</button>
         <button onClick={this.setScientific}>Scientific</button>
-        {this.state.basic ? 
+        {this.state.basic === false ? 
         <>
         <div className='calcRow'>
           <h2 onClick={() => this.accumulate('1')} className='numbers'>1</h2>
