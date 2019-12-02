@@ -40,7 +40,6 @@ class App extends React.Component {
         }
       }
     }
-    console.log('account', this.string)
     return arr
   }
 
@@ -118,7 +117,6 @@ class App extends React.Component {
         test : arr,
       })
       this.parensTest = arr
-      console.log('arrayIt', this.parensTest)
   }
 
   // do operations within parens
@@ -142,17 +140,13 @@ class App extends React.Component {
     if(count === 2){
       let newArr = arr.splice(start,stop - start + 1)
       let newArr1 = newArr.splice(1,newArr.length - 2)
-      console.log('newArr1', newArr1)
       const newNum = this.totaling(newArr1)
       arr.splice(start,0,newNum)
-      console.log('arrparens', newNum)
     }
     return this.parensTest
   }
 
   totaling = (input) => {
-    // let arr1 = this.parensDisplay === '' ? this.state.display : this.parensDisplay
-    // console.log('arr1', arr1)
     let arr = input;
     let operations = ['*', '/', '+', '-'];
     let go = true;
@@ -201,13 +195,11 @@ class App extends React.Component {
       total : arr[0],
       show : true,
     });
-    console.log('totaling', arr[0])
     return arr[0]
   }
 
   testTotal = () => {
     let newArr = this.accountParens()
-    console.log('parens', newArr)
     if(this.state.number !== ''){
     this.setState(prevState => ({
       number : '',
@@ -222,9 +214,7 @@ class App extends React.Component {
       }else{
         go = false
       }
-    }
-    this.parensDisplay = '';
-  
+    }  
   return this.totaling(this.parensTest)
 }
 
