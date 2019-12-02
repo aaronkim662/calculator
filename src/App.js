@@ -21,7 +21,7 @@ class App extends React.Component {
 
   // separate operators
   accountParens = () => {
-    let arr = this.string
+    let arr = this.parensTest
     let operations = ['*', '/', '+', '-','(',')'];
     let go = true;
     while(go){
