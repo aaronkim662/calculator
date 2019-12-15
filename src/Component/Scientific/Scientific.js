@@ -4,7 +4,7 @@ class Scientific extends React.Component {
     state = {
         display : '',
         mode :  'Deg',
-        parens : true,
+        trigParens : true,
     }
 
 
@@ -78,7 +78,7 @@ class Scientific extends React.Component {
         let go = true;
         while(go){
         for(let i = 0; i < str.length; i+= 1){
-          if(str[i] === '+' || str[i] === '-' || str[i] === '*' || str[i] === '/' || (str[i] === '(') ||str[i] === ')'){
+          if(str[i] === '+' || str[i] === '-' || str[i] === '*' || str[i] === '/' || str[i] === '(' ||str[i] === ')' || str[i] === 'sin' || str[i] === 'cos' || str[i] === 'tan' || str[i] === '^' || str[i] === 'log')){
             let newStr = str.substring(0,i);
             if(newStr !== ''){
               arr.push(newStr)
@@ -252,11 +252,80 @@ class Scientific extends React.Component {
       return this.totaling(this.parensTest)
     }
 
+    //                //
+    // trig functions // 
+    //                //
+    sin = () => {
+    let arr = this.parensTest
+    let trigIdx = arr.indexOf('sin');
+    let secondIdx = arr.indexOf(')');
+    let newArr = arr.splice(trigIdx, secondIdx - 1)
+    let value = parseInt(newArr[newArr.length - 2])
+    let eva = Math.round(Math.sin(value * Math.PI/180) * 100)/100
+    arr.splice(trigIdx,0,eva)
+    this.parensTest = arr
+  }
+
+  cos = () => {
+  let arr = this.parensTest
+  let trigIdx = arr.indexOf('cos');
+  let secondIdx = arr.indexOf(')');
+  let newArr = arr.splice(trigIdx, secondIdx - 1)
+  let value = parseInt(newArr[newArr.length - 2])
+  let eva = Math.round(Math.cos(value * Math.PI/180) * 100)/100
+  arr.splice(trigIdx,0,eva)
+  this.parensTest = arr
+}
+
+tan = () => {
+  let arr = this.parensTest;
+  let trigIdx = arr.indexOf('tan');
+  let secondIdx = arr.indexOf(')');
+  let newArr = arr.splice(trigIdx, secondIdx - 1)
+  let value = parseInt(newArr[newArr.length - 2])
+  let eva = Math.round(Math.tan(value * Math.PI/180) * 100)/100
+  arr.splice(trigIdx,0,eva)
+  this.parensTest = arr;
+}
+
+log = () => {
+  let arr = this.parensTest;
+  let trigIdx = arr.indexOf('log');
+  let secondIdx = arr.indexOf(')');
+  let newArr = arr.splice(trigIdx, secondIdx - 1)
+  let value = parseInt(newArr[newArr.length - 2])
+  let eva = Math.round(Math.log10(value) * 100)/100
+  arr.splice(trigIdx,0,eva);
+  this.parensTest = arr;
+}
+
+ln = () => {
+  let arr = this.parensTest;
+  let trigIdx = arr.indexOf('ln');
+  let secondIdx = arr.indexOf(')');
+  let newArr = arr.splice(trigIdx, secondIdx - 1)
+  let value = parseInt(newArr[newArr.length - 2])
+  let eva = Math.round(Math.log(value) * 100)/100
+  arr.splice(trigIdx,0,eva)
+  this.parensTest = arr;
+}
+
+exponent = () => {
+  let arr = this.parensTest;
+  let eloIdx = arr.indexOf('^');
+  let newArr = arr.splice(eloIdx - 1, eloIdx)
+  let value = Math.pow(parseInt(newArr[0]),parseInt(newArr[2]))
+  arr.splice(eloIdx - 1,0,value)
+  this.parensTest = arr;
+}
+
+    //                //
+
     setTrig = (char) => {
         this.string += char + '('
-        console.log('string', this.string)
+
         this.setState({
-            parens : false
+            trigParens : false
         })
 
         this.setState(prevState => ({
@@ -291,9 +360,6 @@ class Scientific extends React.Component {
         this.string = '';
         this.parensTest = ''
       }
-
-      // trig additions
-
       
     render(){
         return(

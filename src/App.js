@@ -233,12 +233,6 @@ handleChange = (e) => {
   this.string = e;
   this.arrayIt();
 }
-
-handlePi = () => {
-  this.setState(prevState => ({
-    display: prevState.display + 'PI'
-  }))
-}
 //
 // set modes and states
 setBasic = () => {
@@ -248,18 +242,6 @@ setBasic = () => {
   })
 }
 
-setMode = (e) => {
-  e.preventDefault();
-  if(this.state.mode === 'Rad'){
-    this.setState({
-      mode : 'Deg'
-    })
-  }else if(this.state.mode === 'Deg'){
-    this.setState({
-      mode : 'Rad'
-    })
-  }
-}
 // set sign to state
 // then add number to test
 setSign = (char) => {
