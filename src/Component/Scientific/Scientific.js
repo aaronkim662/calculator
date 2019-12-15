@@ -25,7 +25,7 @@ class Scientific extends React.Component {
           }))
           this.string += ')';
         }
-        // this.arrayIt();
+        this.arrayIt();
     }
 
     accumulate = (char) => {
@@ -46,7 +46,30 @@ class Scientific extends React.Component {
             number : prevState.number + char,
           }))
         }
-        // this.arrayIt();
+        this.arrayIt();
+    }
+
+    accountParens = () => {
+      let arr = this.parensTest
+      let operations = ['*', '/', '+', '-','(',')'];
+      let go = true;
+      while(go){
+        for(let i = 0; i < arr.length - 1; i += 1){
+          if(arr[i] === ')' && arr[i+1] === '('){
+            arr.splice(i+1,0,'*')
+            i = 0
+          }else if(!operations.includes(arr[i]) && arr[i+1] === '('){
+            arr.splice(i+1,0,'*')
+            i = 0
+          }else if(arr[i] === ')' && !operations.includes(arr[i+1])){
+            arr.splice(i+1,0,'*')
+            i = 0
+          }else{
+            go = false
+          }
+        }
+      }
+      return arr
     }
 
     arrayIt = () => {
@@ -164,10 +187,18 @@ class Scientific extends React.Component {
   }
 
     handlePi = () => {
-        this.setState(prevState => ({
-          display: prevState.display + 'PI'
-        }))
+        
+        if(this.string !== ''){
         this.string += '*Pi'
+        this.setState(prevState => ({
+          display: prevState.display + '*PI'
+        }))
+        }else{
+          this.string += 'Pi'
+          this.setState(prevState => ({
+            display: prevState.display + 'PI'
+          }))
+        }
     }
 
     setMode = (e) => {
@@ -198,8 +229,28 @@ class Scientific extends React.Component {
           number : '',
         })
       
-        // this.arrayIt();
+        this.arrayIt();
       };
+
+  testTotal = () => {
+        let newArr = this.accountParens()
+        if(this.state.number !== ''){
+        this.setState(prevState => ({
+          number : '',
+          check : true,
+          test : newArr
+          }))
+        }
+        let go = true
+        while(go){
+          if(this.state.test.includes('(') && this.state.test.includes(')')){
+            this.parens();
+          }else{
+            go = false
+          }
+        }  
+      return this.totaling(this.parensTest)
+    }
 
     setTrig = (char) => {
         this.string += char + '('
@@ -211,6 +262,19 @@ class Scientific extends React.Component {
         this.setState(prevState => ({
             display: prevState.display + char + '(',
           }))
+    }
+
+    setMode = (e) => {
+      e.preventDefault();
+      if(this.state.mode === 'Rad'){
+        this.setState({
+          mode : 'Deg'
+        })
+      }else if(this.state.mode === 'Deg'){
+        this.setState({
+          mode : 'Rad'
+        })
+      }
     }
 
     clearAll = () => {
@@ -227,6 +291,10 @@ class Scientific extends React.Component {
         this.string = '';
         this.parensTest = ''
       }
+
+      // trig additions
+
+      
     render(){
         return(
             <>
