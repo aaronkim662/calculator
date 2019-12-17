@@ -78,7 +78,7 @@ class Scientific extends React.Component {
         let go = true;
         while(go){
         for(let i = 0; i < str.length; i+= 1){
-          if(str[i] === '+' || str[i] === '-' || str[i] === '*' || str[i] === '/' || str[i] === '(' ||str[i] === ')' || str[i] === 'sin' || str[i] === 'cos' || str[i] === 'tan' || str[i] === '^' || str[i] === 'log')){
+          if(str[i] === '+' || str[i] === '-' || str[i] === '*' || str[i] === '/' || str[i] === '(' ||str[i] === ')' || str[i] === 'sin' || str[i] === 'cos' || str[i] === 'tan' || str[i] === '^' || str[i] === 'log'){
             let newStr = str.substring(0,i);
             if(newStr !== ''){
               arr.push(newStr)
@@ -233,6 +233,17 @@ class Scientific extends React.Component {
       };
 
   testTotal = () => {
+    // do trig functions
+    let trigStart = true;
+    while(trigStart){
+      if(this.parensTest.includes('sin')){
+        this.sin()
+      }else if(this.parensTest.includes('cos')){
+        this.cos()
+      }
+      trigStart = false
+    }
+    console.log(this.parensTest)
         let newArr = this.accountParens()
         if(this.state.number !== ''){
         this.setState(prevState => ({
@@ -259,10 +270,18 @@ class Scientific extends React.Component {
     let arr = this.parensTest
     let trigIdx = arr.indexOf('sin');
     let secondIdx = arr.indexOf(')');
+    if(trigIdx === 0){
+      let newArr = arr.splice(trigIdx, secondIdx + 1)
+      let value = parseInt(newArr[newArr.length - 2])
+      let eva = Math.round(Math.sin(value * Math.PI/180) * 100)/100;
+      arr.splice(trigIdx,0,eva)
+      this.parensTest = arr[0]
+    }else{
     let newArr = arr.splice(trigIdx, secondIdx - 1)
     let value = parseInt(newArr[newArr.length - 2])
     let eva = Math.round(Math.sin(value * Math.PI/180) * 100)/100
     arr.splice(trigIdx,0,eva)
+    }
     this.parensTest = arr
   }
 
@@ -270,10 +289,17 @@ class Scientific extends React.Component {
   let arr = this.parensTest
   let trigIdx = arr.indexOf('cos');
   let secondIdx = arr.indexOf(')');
+  if(trigIdx === 0){
+    let newArr = arr.splice(trigIdx, secondIdx + 1)
+    let value = parseInt(newArr[newArr.length - 2])
+    let eva = Math.round(Math.cos(value * Math.PI/180) * 100)/100;
+    arr.splice(trigIdx,0,eva)
+  }else{
   let newArr = arr.splice(trigIdx, secondIdx - 1)
   let value = parseInt(newArr[newArr.length - 2])
   let eva = Math.round(Math.cos(value * Math.PI/180) * 100)/100
   arr.splice(trigIdx,0,eva)
+  }
   this.parensTest = arr
 }
 
@@ -281,32 +307,53 @@ tan = () => {
   let arr = this.parensTest;
   let trigIdx = arr.indexOf('tan');
   let secondIdx = arr.indexOf(')');
+  if(trigIdx === 0){
+    let newArr = arr.splice(trigIdx, secondIdx + 1)
+    let value = parseInt(newArr[newArr.length - 2])
+    let eva = Math.round(Math.tan(value * Math.PI/180) * 100)/100;
+    arr.splice(trigIdx,0,eva)
+  }else{
   let newArr = arr.splice(trigIdx, secondIdx - 1)
   let value = parseInt(newArr[newArr.length - 2])
   let eva = Math.round(Math.tan(value * Math.PI/180) * 100)/100
   arr.splice(trigIdx,0,eva)
   this.parensTest = arr;
+  }
 }
 
 log = () => {
   let arr = this.parensTest;
   let trigIdx = arr.indexOf('log');
   let secondIdx = arr.indexOf(')');
+  if(trigIdx === 0){
+    let newArr = arr.splice(trigIdx, secondIdx + 1)
+    let value = parseInt(newArr[newArr.length - 2])
+    let eva = Math.round(Math.log(value * Math.PI/180) * 100)/100;
+    arr.splice(trigIdx,0,eva)
+  }else{
   let newArr = arr.splice(trigIdx, secondIdx - 1)
   let value = parseInt(newArr[newArr.length - 2])
   let eva = Math.round(Math.log10(value) * 100)/100
   arr.splice(trigIdx,0,eva);
   this.parensTest = arr;
+  }
 }
 
 ln = () => {
   let arr = this.parensTest;
   let trigIdx = arr.indexOf('ln');
   let secondIdx = arr.indexOf(')');
+  if(trigIdx === 0){
+    let newArr = arr.splice(trigIdx, secondIdx) + 1
+    let value = parseInt(newArr[newArr.length - 2])
+    let eva = Math.round(Math.sin(value * Math.PI/180) * 100)/100;
+    arr.splice(trigIdx,0,eva)
+  }else{
   let newArr = arr.splice(trigIdx, secondIdx - 1)
   let value = parseInt(newArr[newArr.length - 2])
   let eva = Math.round(Math.log(value) * 100)/100
   arr.splice(trigIdx,0,eva)
+  }
   this.parensTest = arr;
 }
 
@@ -331,6 +378,7 @@ exponent = () => {
         this.setState(prevState => ({
             display: prevState.display + char + '(',
           }))
+          this.arrayIt()
     }
 
     setMode = (e) => {
@@ -389,11 +437,11 @@ exponent = () => {
             </div>
             <div className='calcRow'>
              <h2 onClick={() => this.setTrig('sin')} className='numbers'>sin</h2>
-             <h2 className='numbers'>cos</h2>
-             <h2 className='numbers'>tan</h2>
+             <h2 onClick={() => this.setTrig('cos')} className='numbers'>cos</h2>
+             <h2 onClick={() => this.setTrig('tan')} className='numbers'>tan</h2>
              <h2 className='numbers'>^</h2>
-             <h2 className='numbers'>log</h2>
-             <h2 className='numbers'>ln</h2>
+             <h2 onClick={() => this.setTrig('tan')} className='numbers'>log</h2>
+             <h2 onClick={() => this.setTrig('ln')} className='numbers'>ln</h2>
              <h2 className='numbers'>e</h2>
              <h2 className='numbers' onClick={() => this.handlePi()}>π</h2>
             </div>

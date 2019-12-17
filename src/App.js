@@ -156,7 +156,7 @@ class App extends React.Component {
         if(arr[i] === operations[0]){
           const multiply = parseFloat(arr[i-1]) * parseFloat(arr[i+1]);
           arr.splice(i-1,3);
-          arr.splice(i-1,0,multiply.toFixed(5));
+          arr.splice(i-1,0,multiply.toFixed(2));
           i = 0;
         }else if(arr[i] === operations[1]){
           const divide = (parseFloat(arr[i-1]) / parseFloat(arr[i+1]));
@@ -177,12 +177,12 @@ class App extends React.Component {
         if(arr[i] === operations[0]){
           const add = parseFloat(arr[i-1]) + parseFloat(arr[i+1]);
           arr.splice(i-1,3);
-          arr.splice(i-1,0,add.toFixed(5));
+          arr.splice(i-1,0,add.toFixed(2));
           i = 0;
         }else if(arr[i] === operations[1]){
           const subtract = parseFloat(arr[i-1]) - parseFloat(arr[i+1]);
           arr.splice(i-1,3);
-          arr.splice(i-1,0, subtract.toFixed(5));
+          arr.splice(i-1,0, subtract.toFixed(2));
           i = 0;
         }
       }
@@ -200,7 +200,17 @@ class App extends React.Component {
   }
 
   testTotal = () => {
-    let newArr = this.accountParens()
+    if(this.parensTest.length === 1){
+      this.setState({
+        total : this.parensTest[0]
+      })
+    }
+    let newArr = []
+    if(this.parensTest.includes('(') && this.parensTest.includes(')')){
+      newArr = this.accountParens()
+    }else{
+      newArr = this.parensTest
+    }
     if(this.state.number !== ''){
     this.setState(prevState => ({
       number : '',
@@ -262,12 +272,20 @@ setSign = (char) => {
   this.arrayIt();
 };
 
-setScientific = () => {
+setType = () => {
+  if(this.state.scientific === false){
   this.setState({
     basic: false,
     scientific : true,
   })
+  }else{
+    this.setState({
+      basic: true,
+      scientific : false,
+    })
+  }
 }
+
 // 
 
 // Clear all
@@ -292,44 +310,45 @@ clearAll = () => {
     return (
       <div className='App'>
         <h1>Calculator</h1>
-        <button onClick={this.setBasic}>Basic</button>
-        <button onClick={this.setScientific}>Scientific</button>
-        {this.state.basic === false ? 
+        <button onClick={this.setType}>Basic</button>
+        <button onClick={this.setType}>Scientific</button>
+        {this.state.basic === true ? 
         <>
-        <div className='calcRow'>
-          <h2 onClick={() => this.accumulate('1')} className='numbers'>1</h2>
-          <h2 onClick={() => this.accumulate('2')} className='numbers'>2</h2>
-          <h2 onClick={() => this.accumulate('3')} className='numbers'>3</h2>
+        <h4>Display: {this.state.display}</h4>
+        <h4>Total : {this.state.show ? this.state.total : null}</h4>
+        <div className='calcBasic'>
+          <div className='calcNumbers'>
+          <h4 onClick={() => this.clearAll()} className='signs'>Clear</h4>
+            <div className='calcRow'>
+              <h2 onClick={() => this.accumulate('1')} className='numbers'>1</h2>
+              <h2 onClick={() => this.accumulate('2')} className='numbers'>2</h2>
+              <h2 onClick={() => this.accumulate('3')} className='numbers'>3</h2>
+            </div>
+            <div className='calcRow'>
+              <h2 onClick={() => this.accumulate('4')} className='numbers'>4</h2>
+              <h2 onClick={() => this.accumulate('5')} className='numbers'>5</h2>
+              <h2 onClick={() => this.accumulate('6')} className='numbers'>6</h2>
+            </div>
+          <div className='calcRow'>
+            <h2 onClick={() => this.accumulate('7')} className='numbers'>7</h2>
+            <h2 onClick={() => this.accumulate('8')} className='numbers'>8</h2>
+            <h2 onClick={() => this.accumulate('9')} className='numbers'>9</h2>
+          </div>
+          <div className='calcRow'>
+            <h2 onClick={() => this.accumulate('.')} className='numbers'>.</h2>
+            <h2 onClick={() => this.accumulate('0')} className='numbers'>0</h2>
+            <h2 onClick={() => this.addParens()} className='numbers'>()</h2>
+          </div>
         </div>
-        <div className='calcRow'>
-          <h2 onClick={() => this.accumulate('4')} className='numbers'>4</h2>
-          <h2 onClick={() => this.accumulate('5')} className='numbers'>5</h2>
-          <h2 onClick={() => this.accumulate('6')} className='numbers'>6</h2>
+        <div className='calcSigns'>
+          <h2 onClick={() => this.setSign('/')} className='signs'>÷</h2>
+          <h2 onClick={() => this.setSign('*')} className='signs'>*</h2>
+          <h2 onClick={() => this.setSign('-')} className='signs'>-</h2>
+          <h2 onClick={() => this.setSign('+')} className='signs'>+</h2>
+          <h2 onClick={() => this.testTotal()} className='signs'>=</h2>
         </div>
-      <div className='calcRow'>
-        <h2 onClick={() => this.accumulate('7')} className='numbers'>7</h2>
-        <h2 onClick={() => this.accumulate('8')} className='numbers'>8</h2>
-        <h2 onClick={() => this.accumulate('9')} className='numbers'>9</h2>
+        {/* <input className='calcInput' onChange={(e) => this.handleChange(e)} value={this.state.display}  /> */}
       </div>
-      <div className='calcRow'>
-        <h2 onClick={() => this.accumulate('0')} className='numbers'>0</h2>
-        <h2 onClick={() => this.accumulate('.')} className='numbers'>.</h2>
-        <h2 onClick={() => this.addParens()} className='numbers'>()</h2>
-      </div>
-      <div className='calcRow'>
-        <h2 onClick={() => this.setSign('+')} className='numbers'>+</h2>
-        <h2 onClick={() => this.setSign('-')} className='numbers'>-</h2>
-        <h2 onClick={() => this.setSign('*')} className='numbers'>*</h2>
-        <h2 onClick={() => this.setSign('/')} className='numbers'>/</h2>
-      </div>
-      <h4>Display: {this.state.display}</h4>
-      <h4>...</h4>
-      <input className='calcInput' onChange={(e) => this.handleChange(e)} value={this.state.display}  />
-      <div className='calcRow'>
-      <h4 onClick={() => this.testTotal()}>=</h4>
-      <h4>Total : {this.state.show ? this.state.total : null}</h4>
-      <h4 onClick={() => this.clearAll()}>Clear</h4>
-      </div> 
       </> 
        : <Scientific />
         }

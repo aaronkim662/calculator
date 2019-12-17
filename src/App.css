@@ -2,18 +2,26 @@
   text-align: center;
 }
 
-.calcRow {
+.calcBasic {
   display: flex;
-  justify-content: space-around;
-
-  margin: 50px 0 0 0;
 }
 
 .calcInput {
   border: solid;
 }
+
+.calcRow {
+  display: flex;
+  /* justify-content: space-around; */
+}
+
 .numbers {
   border: solid;
-  padding: 20px;
+  /* padding: 20px; */
+  margin: 0 auto;
+}
+
+.signs {
+  border: solid;
   margin: 0 auto;
 }
