@@ -310,8 +310,8 @@ clearAll = () => {
     return (
       <div className='App'>
         <h1 className='title'>Calculator</h1>
-        {/* <button onClick={this.setType}>Basic</button> */}
-        {/* <button onClick={this.setType}>Scientific</button> */}
+        <button onClick={this.setType}>Basic</button>
+        <button onClick={this.setType}>Scientific</button>
         {this.state.basic === true ? 
         <>
         <div className='basicLayout'>
