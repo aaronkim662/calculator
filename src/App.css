@@ -1,27 +1,103 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
 .App {
   text-align: center;
+  background-color: rgb(94, 95, 173);
+  height: 90vh;
+  margin: 0 auto;
+  color: white;
 }
 
+.basicLayout {
+  display: flex;
+  flex-direction: column;
+  border:solid;
+  border-width: 0px;
+  background-color: rgb(94, 95, 173);
+  height: 100vh;
+}
 .calcBasic {
   display: flex;
+  justify-content: center;
+
 }
 
 .calcInput {
   border: solid;
 }
 
+/* .calcNumbers {
+
+} */
+
 .calcRow {
   display: flex;
   /* justify-content: space-around; */
 }
 
+.clear {
+  border-radius: 20px;
+  margin: 0 0 10px 5px;
+  text-align: center;
+  padding: 10px;
+  border-width: 0px;
+  color: white;
+  background-color: rgb(82, 82, 37);
+
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  height: 110px;
+  justify-content: space-around;
+  font-family: 'Roboto', sans-serif;
+  padding: 10px 20px 10px 10px;
+  text-align: right;
+  color:white;
+}
+
+/* .test {
+
+  animation-duration: 1s;
+  animation-timing-function: steps(1, end);
+  animation-iteration-count: infinite
+
+} */
+.test:after {
+  content: '|';
+  animation: caret ;
+  animation-duration: 1s;
+  animation-timing-function: steps(1, end);
+
+}
+
 .numbers {
   border: solid;
-  /* padding: 20px; */
+  padding: 20px;
+  margin: 5px;
+  border-radius: 20px;
+  border-width: 0px;
+  background: rgba(54, 41, 41, 0.918);
+  height: 30px;
+  width: 30px;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+.title {
   margin: 0 auto;
 }
 
 .signs {
   border: solid;
-  margin: 0 auto;
+  margin: 8px;
+  padding: 18px;
+  /* height: 43px; */
+  width: 30px;
+  border-width: 0px;
+  border-radius: 20px;
+  background: rgba(175, 43, 43, 0.918);
+  color: white;
+  font-family: 'Roboto', sans-serif;
 }

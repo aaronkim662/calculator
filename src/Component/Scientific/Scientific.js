@@ -415,35 +415,35 @@ exponent = () => {
             <div>Scientific</div>
             <button onClick={(e) => this.setMode(e)}>{this.state.mode}</button>
             <div className='calcRow'>
-             <h2 onClick={() => this.accumulate('0')} className='numbers'>0</h2>
-             <h2 onClick={() => this.accumulate('1')} className='numbers'>1</h2>
-             <h2 onClick={() => this.accumulate('2')} className='numbers'>2</h2>
-             <h2 onClick={() => this.accumulate('3')} className='numbers'>3</h2>
-             <h2 onClick={() => this.accumulate('4')} className='numbers'>4</h2>
+             <h2 onClick={() => this.accumulate('0')} className='numbersScientific'>0</h2>
+             <h2 onClick={() => this.accumulate('1')} className='numbersScientific'>1</h2>
+             <h2 onClick={() => this.accumulate('2')} className='numbersScientific'>2</h2>
+             <h2 onClick={() => this.accumulate('3')} className='numbersScientific'>3</h2>
+             <h2 onClick={() => this.accumulate('4')} className='numbersScientific'>4</h2>
             </div>
             <div className='calcRow'>
-             <h2 onClick={() => this.accumulate('5')} className='numbers'>5</h2>
-             <h2 onClick={() => this.accumulate('6')} className='numbers'>6</h2>
-             <h2 onClick={() => this.accumulate('7')} className='numbers'>7</h2>
-             <h2 onClick={() => this.accumulate('8')} className='numbers'>8</h2>
-             <h2 onClick={() => this.accumulate('9')} className='numbers'>9</h2>
+             <h2 onClick={() => this.accumulate('5')} className='numbersScientific'>5</h2>
+             <h2 onClick={() => this.accumulate('6')} className='numbersScientific'>6</h2>
+             <h2 onClick={() => this.accumulate('7')} className='numbersScientific'>7</h2>
+             <h2 onClick={() => this.accumulate('8')} className='numbersScientific'>8</h2>
+             <h2 onClick={() => this.accumulate('9')} className='numbersScientific'>9</h2>
             </div>
             <div className='calcRow'>
-             <h2 onClick={() => this.setSign('+')} className='numbers'>+</h2>
-             <h2 onClick={() => this.setSign('-')} className='numbers'>-</h2>
-             <h2 onClick={() => this.setSign('*')} className='numbers'>*</h2>
-             <h2 onClick={() => this.setSign('/')} className='numbers'>/</h2>
-             <h2 onClick={() => this.addParens()} className='numbers'>()</h2>
+             <h2 onClick={() => this.setSign('+')} className='numbersScientific'>+</h2>
+             <h2 onClick={() => this.setSign('-')} className='numbersScientific'>-</h2>
+             <h2 onClick={() => this.setSign('*')} className='numbersScientific'>*</h2>
+             <h2 onClick={() => this.setSign('/')} className='numbersScientific'>/</h2>
+             <h2 onClick={() => this.addParens()} className='numbersScientific'>()</h2>
             </div>
             <div className='calcRow'>
-             <h2 onClick={() => this.setTrig('sin')} className='numbers'>sin</h2>
-             <h2 onClick={() => this.setTrig('cos')} className='numbers'>cos</h2>
-             <h2 onClick={() => this.setTrig('tan')} className='numbers'>tan</h2>
-             <h2 className='numbers'>^</h2>
-             <h2 onClick={() => this.setTrig('tan')} className='numbers'>log</h2>
-             <h2 onClick={() => this.setTrig('ln')} className='numbers'>ln</h2>
-             <h2 className='numbers'>e</h2>
-             <h2 className='numbers' onClick={() => this.handlePi()}>π</h2>
+             <h2 onClick={() => this.setTrig('sin')} className='trigScientific'>sin</h2>
+             <h2 onClick={() => this.setTrig('cos')} className='trigScientific'>cos</h2>
+             <h2 onClick={() => this.setTrig('tan')} className='trigScientific'>tan</h2>
+             <h2 onClick={() => this.setTrig('^')} className='trigScientific'>^</h2>
+             <h2 onClick={() => this.setTrig('tan')} className='trigScientific'>log</h2>
+             <h2 onClick={() => this.setTrig('ln')} className='trigScientific'>ln</h2>
+             <h2 onClick={() => this.setTrig('e')} className='trigScientific'>e</h2>
+             <h2 className='trigScientific' onClick={() => this.handlePi()}>π</h2>
             </div>
             <h4>Display: {this.state.display}</h4>
            <h4>...</h4>

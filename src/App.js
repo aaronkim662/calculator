@@ -309,45 +309,49 @@ clearAll = () => {
   render (){
     return (
       <div className='App'>
-        <h1>Calculator</h1>
-        <button onClick={this.setType}>Basic</button>
-        <button onClick={this.setType}>Scientific</button>
+        <h1 className='title'>Calculator</h1>
+        {/* <button onClick={this.setType}>Basic</button> */}
+        {/* <button onClick={this.setType}>Scientific</button> */}
         {this.state.basic === true ? 
         <>
-        <h4>Display: {this.state.display}</h4>
-        <h4>Total : {this.state.show ? this.state.total : null}</h4>
-        <div className='calcBasic'>
-          <div className='calcNumbers'>
-          <h4 onClick={() => this.clearAll()} className='signs'>Clear</h4>
+        <div className='basicLayout'>
+          <div className='display'>
+          <h4 className='test'>{this.state.display}</h4>
+          <h4>{this.state.show ? this.state.total : null}</h4>
+          </div>
+          <div className='calcBasic'>
+            <div className='calcNumbers'>
+            <h4 onClick={() => this.clearAll()} className='clear'>Clear</h4>
+              <div className='calcRow'>
+                <h2 onClick={() => this.accumulate('1')} className='numbers'>1</h2>
+                <h2 onClick={() => this.accumulate('2')} className='numbers'>2</h2>
+                <h2 onClick={() => this.accumulate('3')} className='numbers'>3</h2>
+              </div>
+              <div className='calcRow'>
+                <h2 onClick={() => this.accumulate('4')} className='numbers'>4</h2>
+                <h2 onClick={() => this.accumulate('5')} className='numbers'>5</h2>
+                <h2 onClick={() => this.accumulate('6')} className='numbers'>6</h2>
+              </div>
             <div className='calcRow'>
-              <h2 onClick={() => this.accumulate('1')} className='numbers'>1</h2>
-              <h2 onClick={() => this.accumulate('2')} className='numbers'>2</h2>
-              <h2 onClick={() => this.accumulate('3')} className='numbers'>3</h2>
+              <h2 onClick={() => this.accumulate('7')} className='numbers'>7</h2>
+              <h2 onClick={() => this.accumulate('8')} className='numbers'>8</h2>
+              <h2 onClick={() => this.accumulate('9')} className='numbers'>9</h2>
             </div>
             <div className='calcRow'>
-              <h2 onClick={() => this.accumulate('4')} className='numbers'>4</h2>
-              <h2 onClick={() => this.accumulate('5')} className='numbers'>5</h2>
-              <h2 onClick={() => this.accumulate('6')} className='numbers'>6</h2>
+              <h2 onClick={() => this.accumulate('.')} className='numbers'>.</h2>
+              <h2 onClick={() => this.accumulate('0')} className='numbers'>0</h2>
+              <h2 onClick={() => this.addParens()} className='numbers'>()</h2>
             </div>
-          <div className='calcRow'>
-            <h2 onClick={() => this.accumulate('7')} className='numbers'>7</h2>
-            <h2 onClick={() => this.accumulate('8')} className='numbers'>8</h2>
-            <h2 onClick={() => this.accumulate('9')} className='numbers'>9</h2>
           </div>
-          <div className='calcRow'>
-            <h2 onClick={() => this.accumulate('.')} className='numbers'>.</h2>
-            <h2 onClick={() => this.accumulate('0')} className='numbers'>0</h2>
-            <h2 onClick={() => this.addParens()} className='numbers'>()</h2>
+          <div className='calcSigns'>
+            <h2 onClick={() => this.setSign('/')} className='signs'>÷</h2>
+            <h2 onClick={() => this.setSign('*')} className='signs'>*</h2>
+            <h2 onClick={() => this.setSign('-')} className='signs'>-</h2>
+            <h2 onClick={() => this.setSign('+')} className='signs'>+</h2>
+            <h2 onClick={() => this.testTotal()} className='signs'>=</h2>
           </div>
+          {/* <input className='calcInput' onChange={(e) => this.handleChange(e)} value={this.state.display}  /> */}
         </div>
-        <div className='calcSigns'>
-          <h2 onClick={() => this.setSign('/')} className='signs'>÷</h2>
-          <h2 onClick={() => this.setSign('*')} className='signs'>*</h2>
-          <h2 onClick={() => this.setSign('-')} className='signs'>-</h2>
-          <h2 onClick={() => this.setSign('+')} className='signs'>+</h2>
-          <h2 onClick={() => this.testTotal()} className='signs'>=</h2>
-        </div>
-        {/* <input className='calcInput' onChange={(e) => this.handleChange(e)} value={this.state.display}  /> */}
       </div>
       </> 
        : <Scientific />
