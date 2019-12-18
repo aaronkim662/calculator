@@ -101,3 +101,28 @@
   color: white;
   font-family: 'Roboto', sans-serif;
 }
+
+@media(min-width: 322px){
+  .display {
+    margin-right: 10%;
+  }
+}
+
+@media(min-width: 422px) {
+  .display {
+    margin-right: 8%;
+    padding-right: 10%;
+  }
+}
+
+@media(min-width: 476px) {
+  .display {
+    margin-right: 40%;
+  }
+}
+
+/* @media(min-width: 1080px){
+  .display {
+  color:blue;
+  }
+} */
